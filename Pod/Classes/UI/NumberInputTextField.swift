@@ -144,13 +144,24 @@ open class NumberInputTextField: StylizedTextField {
      
      - parameter text: The card number which should be displayed in `self`.
      */
-    open func prefill(_ text: String) {
-        // Set text and apply text color changes if the prefilled card type is unknown
-        self.text = text
-        
-        _ = textField(self,
-                      shouldChangeCharactersIn: NSRange(location: 0, length: text.count),
-                      replacementString: cardNumber.rawValue)
+    open func prefill(_ text: String, isValidationNeeded: Bool = true) {
+        if isValidationNeeded {
+            let unformattedCardNumber = String(text.filter({$0.isNumeric()}))
+            let cardNumber = Number(rawValue: unformattedCardNumber)
+            let type = cardTypeRegister.cardType(for: cardNumber)
+            let numberPartiallyValid = type.checkCardNumberPartiallyValid(cardNumber) == .Valid
+            
+            if numberPartiallyValid {
+                // Set text and apply text color changes if the prefilled card type is unknown
+                self.text = text
+                
+                _ = textField(self,
+                              shouldChangeCharactersIn: NSRange(location: 0, length: text.count),
+                              replacementString: cardNumber.rawValue)
+            }
+        } else {
+            self.text = text
+        }
     }
     
     // MARK: - Helper functions
