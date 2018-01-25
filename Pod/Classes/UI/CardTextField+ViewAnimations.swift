@@ -33,10 +33,6 @@ extension CardTextField {
      Moves the card number input field to the left outside of the screen, so that only the last group of the card number is visible. At the same time, the card detail (expiration month and year and CVC) are displayed to its right.
      */
     @objc open func moveCardNumberOut() {
-        // If the card number is invalid, do not allow to move to the card detail
-        if cardType?.validate(number: card.bankCardNumber) != .Valid {
-            return
-        }
         // If neither expiry nor cvc are required, also do not allow to move to the detail
         if hideExpiryTextFields && hideCVCTextField {
             return
