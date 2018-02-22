@@ -89,53 +89,58 @@ open class NumberInputTextField: StylizedTextField {
     
     // MARK: - UITextFieldDelegate
     
-    open override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    open override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String, isValidationNeeded: Bool = true) -> Bool {
         // Current text in text field, formatted and unformatted:
         let textFieldTextFormatted = NSString(string: textField.text ?? "")
         // Text in text field after applying changes, formatted and unformatted:
         let newTextFormatted = textFieldTextFormatted.replacingCharacters(in: range, with: string)
         let newTextUnformatted = cardNumberFormatter.unformat(cardNumber: newTextFormatted)
         
-        // Set the text color to invalid - this will be changed to `validTextColor` later in this method if the input was valid
-        super.textColor = invalidInputColor
-        
-        if !newTextUnformatted.contains("*") && !newTextUnformatted.isEmpty && !newTextUnformatted.isNumeric() {
-            return false
-        }
-
-        let parsedCardNumber = Number(rawValue: newTextUnformatted)
-        let oldValidation = cardTypeRegister.cardType(for: cardNumber).validate(number: cardNumber)
-        let newValidation =
-            cardTypeRegister.cardType(for: parsedCardNumber).validate(number: parsedCardNumber)
-
-        if !newValidation.contains(.NumberTooLong) {
-            cardNumberFormatter.format(range: range, inTextField: textField, andReplaceWith: string)
-            numberInputTextFieldDelegate?.numberInputTextFieldDidChangeText(self)
-        } else if oldValidation == .Valid {
-            // If the card number is already valid, should call numberInputTextFieldDidComplete on delegate
-            // then set the text color back to normal and return
-            numberInputTextFieldDelegate?.numberInputTextFieldDidComplete(self)
-            super.textColor = _textColor
-            return false
+        if isValidationNeeded {
+            // Set the text color to invalid - this will be changed to `validTextColor` later in this method if the input was valid
+            super.textColor = invalidInputColor
+            
+            if !newTextUnformatted.isEmpty && !newTextUnformatted.isNumeric() {
+                return false
+            }
+            
+            
+            let parsedCardNumber = Number(rawValue: newTextUnformatted)
+            let oldValidation = cardTypeRegister.cardType(for: cardNumber).validate(number: cardNumber)
+            let newValidation =
+                cardTypeRegister.cardType(for: parsedCardNumber).validate(number: parsedCardNumber)
+            
+            if !newValidation.contains(.NumberTooLong) {
+                cardNumberFormatter.format(range: range, inTextField: textField, andReplaceWith: string)
+                numberInputTextFieldDelegate?.numberInputTextFieldDidChangeText(self)
+            } else if oldValidation == .Valid {
+                // If the card number is already valid, should call numberInputTextFieldDidComplete on delegate
+                // then set the text color back to normal and return
+                numberInputTextFieldDelegate?.numberInputTextFieldDidComplete(self)
+                super.textColor = _textColor
+                return false
+            } else {
+                notifyNumberInvalidity()
+            }
+            
+            let newLengthComplete =
+                parsedCardNumber.length == cardTypeRegister.cardType(for: parsedCardNumber).maxLength
+            
+            if newLengthComplete && newValidation != .Valid {
+                addNumberInvalidityObserver()
+            } else if newValidation == .Valid {
+                numberInputTextFieldDelegate?.numberInputTextFieldDidComplete(self)
+            }
+            
+            /// If the number is incomplete or valid, assume it's valid and show it in `textColor`
+            /// Also, if the number is of unknown type and the full IIN has not been entered yet, assume it's valid.
+            if (newValidation.contains(.UnknownType) && newTextUnformatted.count <= 6) || newValidation.contains(.NumberIncomplete) || newValidation == .Valid {
+                super.textColor = _textColor
+            }
         } else {
-            notifyNumberInvalidity()
-        }
-
-        let newLengthComplete =
-            parsedCardNumber.length == cardTypeRegister.cardType(for: parsedCardNumber).maxLength
-
-        if newLengthComplete && newValidation != .Valid {
-            addNumberInvalidityObserver()
-        } else if newValidation == .Valid {
             numberInputTextFieldDelegate?.numberInputTextFieldDidComplete(self)
         }
         
-        /// If the number is incomplete or valid, assume it's valid and show it in `textColor`
-        /// Also, if the number is of unknown type and the full IIN has not been entered yet, assume it's valid.
-        if (newValidation.contains(.UnknownType) && newTextUnformatted.count <= 6) || newValidation.contains(.NumberIncomplete) || newValidation == .Valid {
-            super.textColor = _textColor
-        }
-
         return false
     }
     
@@ -157,14 +162,14 @@ open class NumberInputTextField: StylizedTextField {
                 
                 _ = textField(self,
                               shouldChangeCharactersIn: NSRange(location: 0, length: text.count),
-                              replacementString: cardNumber.rawValue)
+                              replacementString: cardNumber.rawValue, isValidationNeeded: isValidationNeeded)
             }
         } else {
             self.text = text
             
             _ = textField(self,
                           shouldChangeCharactersIn: NSRange(location: 0, length: text.count),
-                          replacementString: cardNumber.rawValue)
+                          replacementString: cardNumber.rawValue, isValidationNeeded: isValidationNeeded)
         }
     }
     
