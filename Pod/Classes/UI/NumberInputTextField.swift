@@ -99,7 +99,7 @@ open class NumberInputTextField: StylizedTextField {
         // Set the text color to invalid - this will be changed to `validTextColor` later in this method if the input was valid
         super.textColor = invalidInputColor
         
-        if !newTextUnformatted.isEmpty && !newTextUnformatted.isNumeric() {
+        if !newTextUnformatted.contains("*") && !newTextUnformatted.isEmpty && !newTextUnformatted.isNumeric() {
             return false
         }
 
