@@ -139,8 +139,8 @@ open class NumberInputTextField: StylizedTextField {
             }
         } else {
 //            cardNumberFormatter.format(range: range, inTextField: textField, andReplaceWith: string)
-            numberInputTextFieldDelegate?.numberInputTextFieldDidChangeText(self)
-            numberInputTextFieldDelegate?.numberInputTextFieldDidComplete(self)
+//            numberInputTextFieldDelegate?.numberInputTextFieldDidChangeText(self)
+//            numberInputTextFieldDelegate?.numberInputTextFieldDidComplete(self)
         }
         
         return false
