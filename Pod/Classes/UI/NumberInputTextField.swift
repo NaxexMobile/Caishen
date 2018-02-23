@@ -89,7 +89,10 @@ open class NumberInputTextField: StylizedTextField {
     
     // MARK: - UITextFieldDelegate
     
-    open override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    open override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String, isValidationNeeded: Bool = true) -> Bool {
+        if !isValidationNeeded {
+            return false
+        }
         // Current text in text field, formatted and unformatted:
         let textFieldTextFormatted = NSString(string: textField.text ?? "")
         // Text in text field after applying changes, formatted and unformatted:
@@ -157,14 +160,14 @@ open class NumberInputTextField: StylizedTextField {
                 
                 _ = textField(self,
                               shouldChangeCharactersIn: NSRange(location: 0, length: text.count),
-                              replacementString: cardNumber.rawValue)
+                              replacementString: cardNumber.rawValue, isValidationNeeded: isValidationNeeded)
             }
         } else {
             self.text = text
             
             _ = textField(self,
                           shouldChangeCharactersIn: NSRange(location: 0, length: text.count),
-                          replacementString: cardNumber.rawValue)
+                          replacementString: cardNumber.rawValue, isValidationNeeded: isValidationNeeded)
         }
     }
     
