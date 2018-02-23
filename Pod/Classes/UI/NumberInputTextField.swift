@@ -202,9 +202,9 @@ open class NumberInputTextField: StylizedTextField {
             
             if let text = textField.text, text.contains("*") {
                 if isRightToLeftLanguage {
-                    return CGRect(x: textField.bounds.width - 40, y: 5, width: 40, height: 22)
+                    return CGRect(x: textField.bounds.width - 42, y: 5, width: 42, height: 22)
                 } else {
-                    return CGRect(x: text.count * 6, y: 5, width: 40, height: 22)
+                    return CGRect(x: text.count * 6, y: 5, width: 42, height: 22)
                 }
             }
         }
