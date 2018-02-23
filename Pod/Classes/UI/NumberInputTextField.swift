@@ -165,9 +165,9 @@ open class NumberInputTextField: StylizedTextField {
         } else {
             self.text = text
             
-            _ = textField(self,
-                          shouldChangeCharactersIn: NSRange(location: 0, length: text.count),
-                          replacementString: cardNumber.rawValue, isValidationNeeded: isValidationNeeded)
+//            _ = textField(self,
+//                          shouldChangeCharactersIn: NSRange(location: 0, length: text.count),
+//                          replacementString: cardNumber.rawValue, isValidationNeeded: isValidationNeeded)
         }
     }
     
