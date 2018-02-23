@@ -138,9 +138,9 @@ open class NumberInputTextField: StylizedTextField {
                 super.textColor = _textColor
             }
         } else {
-            cardNumberFormatter.format(range: range, inTextField: textField, andReplaceWith: string)
-//            numberInputTextFieldDelegate?.numberInputTextFieldDidChangeText(self)
-//            numberInputTextFieldDelegate?.numberInputTextFieldDidComplete(self)
+//            cardNumberFormatter.format(range: range, inTextField: textField, andReplaceWith: string)
+            numberInputTextFieldDelegate?.numberInputTextFieldDidChangeText(self)
+            numberInputTextFieldDelegate?.numberInputTextFieldDidComplete(self)
         }
         
         return false
