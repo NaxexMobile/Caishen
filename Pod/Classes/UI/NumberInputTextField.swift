@@ -172,7 +172,7 @@ open class NumberInputTextField: StylizedTextField {
             
             _ = textField(self,
                           shouldChangeCharactersIn: NSRange(location: 0, length: text.count),
-                          replacementString: cardNumber.rawValue)
+                          replacementString: text)
         }
     }
     
