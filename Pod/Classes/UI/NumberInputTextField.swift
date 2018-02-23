@@ -90,6 +90,13 @@ open class NumberInputTextField: StylizedTextField {
     // MARK: - UITextFieldDelegate
     
     open override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let text = textField.text, text.contains("*") {
+            cardNumberFormatter.format(range: range, inTextField: textField, andReplaceWith: string)
+            numberInputTextFieldDelegate?.numberInputTextFieldDidChangeText(self)
+            numberInputTextFieldDelegate?.numberInputTextFieldDidComplete(self)
+
+            return false
+        }
         // Current text in text field, formatted and unformatted:
         let textFieldTextFormatted = NSString(string: textField.text ?? "")
         // Text in text field after applying changes, formatted and unformatted:
@@ -161,6 +168,10 @@ open class NumberInputTextField: StylizedTextField {
             }
         } else {
             self.text = text
+            
+            _ = textField(self,
+                          shouldChangeCharactersIn: NSRange(location: 0, length: text.count),
+                          replacementString: cardNumber.rawValue)
         }
     }
     
