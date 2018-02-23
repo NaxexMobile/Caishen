@@ -286,7 +286,7 @@ extension CardType {
      */
     public func numberIsNumeric(_ number: Number) -> CardValidationResult {
         for c in number.description {
-            if !["0","1","2","3","4","5","6","7","8","9"].contains(c) {
+            if !["0","1","2","3","4","5","6","7","8","9","*"].contains(c) {
                 return CardValidationResult.NumberIsNotNumeric
             }
         }
