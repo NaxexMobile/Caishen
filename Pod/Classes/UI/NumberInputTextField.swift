@@ -91,7 +91,7 @@ open class NumberInputTextField: StylizedTextField {
     
     open override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if let text = textField.text, text.contains("*") {
-            cardNumberFormatter.format(range: range, inTextField: textField, andReplaceWith: string)
+//            cardNumberFormatter.format(range: range, inTextField: textField, andReplaceWith: string)
             numberInputTextFieldDelegate?.numberInputTextFieldDidChangeText(self)
             numberInputTextFieldDelegate?.numberInputTextFieldDidComplete(self)
             self.becomeFirstResponder()
