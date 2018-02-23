@@ -189,9 +189,8 @@ open class NumberInputTextField: StylizedTextField {
      - returns: A rect indicating the location and bounds of the text within the text field, or nil, if an invalid range has been entered.
      */
     private func rectFor(range: NSRange, in textField: UITextField) -> CGRect? {
-        textField.becomeFirstResponder()
-        
-        guard let rangeStart = textField.position(from: textField.beginningOfDocument, offset: range.location) else {
+
+        guard let rangeStart = textField.position(from: UITextPosition(), offset: range.location) else {
             return nil
         }
         guard let rangeEnd = textField.position(from: rangeStart, offset: range.length) else {
