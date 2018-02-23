@@ -109,7 +109,7 @@ open class StylizedTextField: UITextField, UITextFieldDelegate {
         
     }
     
-    open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String, isValidationNeeded: Bool = true) -> Bool {
+    open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return true
     }
 }

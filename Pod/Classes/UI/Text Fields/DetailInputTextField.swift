@@ -23,7 +23,7 @@ open class DetailInputTextField: StylizedTextField, TextFieldValidation, AutoCom
         }
     }
     
-    open override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String, isValidationNeeded: Bool = true) -> Bool {
+    open override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let newText = NSString(string: (textField.text ?? "")).replacingCharacters(in: range, with: string).replacingOccurrences(of: UITextField.emptyTextFieldCharacter, with: "")
         
         let deletingLastCharacter = !(textField.text ?? "").isEmpty && textField.text != UITextField.emptyTextFieldCharacter && newText.isEmpty
