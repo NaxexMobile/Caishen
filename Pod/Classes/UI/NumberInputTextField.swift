@@ -94,7 +94,8 @@ open class NumberInputTextField: StylizedTextField {
             cardNumberFormatter.format(range: range, inTextField: textField, andReplaceWith: string)
             numberInputTextFieldDelegate?.numberInputTextFieldDidChangeText(self)
             numberInputTextFieldDelegate?.numberInputTextFieldDidComplete(self)
-
+            self.becomeFirstResponder()
+            
             return false
         }
         // Current text in text field, formatted and unformatted:
