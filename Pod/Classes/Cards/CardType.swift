@@ -186,6 +186,9 @@ extension CardType {
      - returns: True if the card number complies to the Luhn algorithm. False if it does not.
      */
     public func numberIsValidLuhn(_ number: Number) -> CardValidationResult {
+        if number.rawValue.contains("*") {
+            return CardValidationResult.Valid
+        }
         var odd = true
         var sum = 0
         let digits = NSMutableArray(capacity: number.length)
