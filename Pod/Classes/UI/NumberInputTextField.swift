@@ -161,6 +161,10 @@ open class NumberInputTextField: StylizedTextField {
             }
         } else {
             self.text = text
+            
+            _ = textField(self,
+                          shouldChangeCharactersIn: NSRange(location: 0, length: text.count),
+                          replacementString: cardNumber.rawValue)
         }
     }
     
@@ -177,6 +181,10 @@ open class NumberInputTextField: StylizedTextField {
      - returns: A rect indicating the location and bounds of the text within the text field, or nil, if an invalid range has been entered.
      */
     private func rectFor(range: NSRange, in textField: UITextField) -> CGRect? {
+        UIView.performWithoutAnimation {
+            textField.becomeFirstResponder()
+        }
+        
         guard let rangeStart = textField.position(from: textField.beginningOfDocument, offset: range.location) else {
             return nil
         }
