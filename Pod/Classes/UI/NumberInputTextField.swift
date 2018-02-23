@@ -189,7 +189,7 @@ open class NumberInputTextField: StylizedTextField {
      */
     private func rectFor(range: NSRange, in textField: UITextField) -> CGRect? {
         UIView.performWithoutAnimation {
-            textField.becomeFirstResponder()
+//            textField.becomeFirstResponder()
         }
         guard let rangeStart = textField.position(from: textField.beginningOfDocument, offset: range.location) else {
             return nil
