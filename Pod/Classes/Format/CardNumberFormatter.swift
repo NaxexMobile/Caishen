@@ -56,7 +56,7 @@ public final class CardNumberFormatter {
             var pattern = ""
             var first = true
             for group in groups {
-                pattern += "(\\d{1,\(group)})"
+                pattern += "(\\d{1,\(group)})|(\\*{1,4})"
                 if !first {
                     pattern += "?"
                 }
@@ -67,9 +67,6 @@ public final class CardNumberFormatter {
             fatalError("Error when creating regular expression: \(error)")
         }
         
-        if cardNumber.contains("*") {
-            return cardNumber
-        }
         return NSArray(array: split(string: cardNumber, with: regex)).componentsJoined(by: self.separator)
     }
     
