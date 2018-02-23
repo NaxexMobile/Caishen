@@ -154,8 +154,7 @@ open class NumberInputTextField: StylizedTextField {
      */
     open func prefill(_ text: String, isValidationNeeded: Bool = true) {
         if isValidationNeeded {
-            let unformattedCardNumber = String(text.filter({$0.isNumeric()}))
-            let cardNumber = Number(rawValue: unformattedCardNumber)
+            let cardNumber = Number(rawValue: text)
             let type = cardTypeRegister.cardType(for: cardNumber)
             let numberPartiallyValid = type.checkCardNumberPartiallyValid(cardNumber) == .Valid
             
