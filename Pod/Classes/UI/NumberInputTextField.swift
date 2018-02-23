@@ -96,7 +96,7 @@ open class NumberInputTextField: StylizedTextField {
         let newTextFormatted = textFieldTextFormatted.replacingCharacters(in: range, with: string)
         let newTextUnformatted = cardNumberFormatter.unformat(cardNumber: newTextFormatted)
         
-        if isValidationNeeded {
+//        if isValidationNeeded {
             // Set the text color to invalid - this will be changed to `validTextColor` later in this method if the input was valid
             super.textColor = invalidInputColor
             
@@ -137,11 +137,11 @@ open class NumberInputTextField: StylizedTextField {
             if (newValidation.contains(.UnknownType) && newTextUnformatted.count <= 6) || newValidation.contains(.NumberIncomplete) || newValidation == .Valid {
                 super.textColor = _textColor
             }
-        } else {
+//        } else {
 //            cardNumberFormatter.format(range: range, inTextField: textField, andReplaceWith: string)
 //            numberInputTextFieldDelegate?.numberInputTextFieldDidChangeText(self)
 //            numberInputTextFieldDelegate?.numberInputTextFieldDidComplete(self)
-        }
+//        }
         
         return false
     }
@@ -169,9 +169,9 @@ open class NumberInputTextField: StylizedTextField {
         } else {
             self.text = text
             
-//            _ = textField(self,
-//                          shouldChangeCharactersIn: NSRange(location: 0, length: text.count),
-//                          replacementString: cardNumber.rawValue, isValidationNeeded: isValidationNeeded)
+            _ = textField(self,
+                          shouldChangeCharactersIn: NSRange(location: 0, length: text.count),
+                          replacementString: cardNumber.rawValue, isValidationNeeded: isValidationNeeded)
         }
     }
     
