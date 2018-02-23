@@ -190,8 +190,21 @@ open class NumberInputTextField: StylizedTextField {
      */
     private func rectFor(range: NSRange, in textField: UITextField) -> CGRect? {
         
+        var isRightToLeftLanguage = true
+        
+        if #available(iOS 9.0, *) {
+            isRightToLeftLanguage = UIView.userInterfaceLayoutDirection(for: semanticContentAttribute) == .rightToLeft
+        } else {
+            let isoCode = Locale.autoupdatingCurrent.languageCode ?? ""
+            isRightToLeftLanguage = Locale.characterDirection(forLanguage: isoCode) == Locale.LanguageDirection.rightToLeft
+        }
+        
         if let text = textField.text, text.contains("*") {
-            return CGRect(x: text.count * 6, y: 5, width: 42, height: 22)
+            if isRightToLeftLanguage {
+                return CGRect(x: textField.bounds.width - 40, y: 5, width: 40, height: 22)
+            } else {
+                return CGRect(x: text.count * 6, y: 5, width: 40, height: 22)
+            }
         }
         
         guard let rangeStart = textField.position(from: textField.beginningOfDocument, offset: range.location) else {
