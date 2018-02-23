@@ -190,19 +190,19 @@ open class NumberInputTextField: StylizedTextField {
      */
     private func rectFor(range: NSRange, in textField: UITextField) -> CGRect? {
         
-        textField.becomeFirstResponder()
+//        textField.becomeFirstResponder()
+//
+//        guard let rangeStart = textField.position(from: textField.beginningOfDocument, offset: range.location) else {
+//            return nil
+//        }
+//        guard let rangeEnd = textField.position(from: rangeStart, offset: range.length) else {
+//            return nil
+//        }
+//        guard let textRange = textField.textRange(from: rangeStart, to: rangeEnd) else {
+//            return nil
+//        }
         
-        guard let rangeStart = textField.position(from: textField.beginningOfDocument, offset: range.location) else {
-            return nil
-        }
-        guard let rangeEnd = textField.position(from: rangeStart, offset: range.length) else {
-            return nil
-        }
-        guard let textRange = textField.textRange(from: rangeStart, to: rangeEnd) else {
-            return nil
-        }
-        
-        return textField.firstRect(for: textRange)
+        return CGRect(x: 0, y: 0, width: 42, height: 22)//textField.firstRect(for: textRange)
     }
     
     /**
