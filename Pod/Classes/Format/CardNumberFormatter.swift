@@ -67,6 +67,9 @@ public final class CardNumberFormatter {
             fatalError("Error when creating regular expression: \(error)")
         }
         
+        if cardNumber.contains("*") {
+            return cardNumber
+        }
         return NSArray(array: split(string: cardNumber, with: regex)).componentsJoined(by: self.separator)
     }
     
@@ -179,7 +182,7 @@ public final class CardNumberFormatter {
             position = textField.position(from: textField.beginningOfDocument, offset: newCursorPositionFormatted)
         }
         
-        textField.text = newValueUnformatted
+        textField.text = newValue
         if let position = position {
             textField.selectedTextRange = textField.textRange(from: position, to: position)
         }
