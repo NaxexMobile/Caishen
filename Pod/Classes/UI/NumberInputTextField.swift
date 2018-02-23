@@ -191,7 +191,7 @@ open class NumberInputTextField: StylizedTextField {
     private func rectFor(range: NSRange, in textField: UITextField) -> CGRect? {
         
         if let text = textField.text, text.contains("*") {
-            return CGRect(x: 104, y: 5, width: 42, height: 22)
+            return CGRect(x: text.count * 6, y: 5, width: 42, height: 22)
         }
         
         guard let rangeStart = textField.position(from: textField.beginningOfDocument, offset: range.location) else {
