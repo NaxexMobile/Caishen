@@ -90,9 +90,9 @@ open class NumberInputTextField: StylizedTextField {
     // MARK: - UITextFieldDelegate
     
     open override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String, isValidationNeeded: Bool = true) -> Bool {
-        if !isValidationNeeded {
-            return false
-        }
+//        if !isValidationNeeded {
+//            return false
+//        }
         // Current text in text field, formatted and unformatted:
         let textFieldTextFormatted = NSString(string: textField.text ?? "")
         // Text in text field after applying changes, formatted and unformatted:
